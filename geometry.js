@@ -3,6 +3,10 @@ function Point(x, y) {
   this.y = Math.round(y*1000)/1000;
 }
 
+Point.prototype.copy = function() {
+  return new Point(this.x, this.y);
+}
+
 Point.rotation = function(p, theta) {
   return new Point(Math.cos(theta)*p.x + Math.sin(theta)*p.y, 
                   -Math.sin(theta)*p.x + Math.cos(theta)*p.y);
@@ -31,6 +35,10 @@ Point.distance = function(a, b) {
 function Vector(angle, magnitude) {
   this.theta = angle < 0 ? Math.PI*2 + angle : angle;
   this.magnitude = magnitude;
+}
+
+Vector.prototype.copy = function() {
+  return new Vector(this.theta, this.magnitude);
 }
 
 Vector.prototype.components = function() {
@@ -65,14 +73,27 @@ Vector.prototype.scalarMultiply = function(s) {
   return Vector.toPolar(this.components().times(s));
 }
 
-function Particle(coords, velocity, acceleration, mass, radius) {
+function Particle(name, coords, velocity, acceleration, mass, radius) {
   this.position = coords ? coords : new Point(0, 0);
   this.velocity = velocity ? velocity : new Vector(0, 0);
   this.acc = acceleration ? acceleration : new Vector(0, 0);
-  this.radius = radius ? radius : 20;
-  this.mass = mass ? mass : 0;
+  this.radius = radius ? radius : 5;
+  this.mass = mass ? mass : 1;
+  this.name = name ? name : "";
 
   Particle.list.push(this);
+}
+
+Particle.prototype.copy = function() {
+  p = new Particle(
+    this.name, 
+    this.position.copy(), 
+    this.velocity.copy(), 
+    this.acc.copy(), 
+    this.mass,
+    this.radius);
+  Particle.list.splice(Particle.list.indexOf(p), 1);
+  return p;
 }
 
 Particle.list = [];

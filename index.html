@@ -1,9 +1,130 @@
 <html>
-<head></head>
-<body>
-  <canvas id="stage" style="border-style:solid;" width="800" height="425"></canvas>
+<head>
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-  <script src="geometry.js"></script>
-  <script src="main.js"></script>
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Orbital</a>
+    </div>
+  </nav>
+
+  <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <button id="start" class="btn btn-default">Start</button>
+      <button id="pause" class="btn btn-default">Pause</button>
+      <button id="reset" class="btn btn-default">Reset</button>
+      <button id="save" class="btn btn-default">Save</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <canvas id="stage" style="border-style:solid;" width="800" height="425"></canvas>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <!-- Nav tabs -->
+        <div class="form-group">
+          <label for="particle_list">Select Particle</label>
+           <select class="form-control" id="particle_list">
+             <option>Particle 1</option>
+             <option>Particle 2</option>
+           </select>
+           <button class="btn btn-default" id="newParticle">+</button>
+        </div>
+        <button id="update">Update</button>
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation"><a href="#meta" aria-controls="meta" role="tab" data-toggle="tab">Meta</a></li>
+          <li role="presentation" class="active"><a href="#props" aria-controls="props" role="tab" data-toggle="tab">Properties</a></li>
+          <li role="presentation"><a href="#appearance" aria-controls="appearance" role="tab" data-toggle="tab">Appearance</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane" id="meta">
+            <form>
+              <div class="form-group">
+                <label for="particle_name">Particle Name</label>
+                <input type="number" class="form-control" name="particle_name">
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane active" id="props">
+            <form id="properties">
+              <div class="form-group">
+                <label for="mass">Mass</label>
+                 <input type="number" class="form-control" name="mass">
+              </div>
+              <div class="form-group">
+                <label for="posx">X Position</label>
+                 <input type="number" class="form-control" name="posx">
+              </div>
+              <div class="form-group">
+                <label for="posy">Y Position</label>
+                 <input type="number" class="form-control" name="posy">
+              </div>
+
+              <div class="form-group">
+                <label for="velx">X Velocity</label>
+                 <input type="number" class="form-control" name="velx">
+              </div>
+              <div class="form-group">
+                <label for="vely">Y Velocity</label>
+                 <input type="number" class="form-control" name="vely">
+              </div>
+
+              <div class="form-group">
+                <label for="accx">X Acceleration</label>
+                 <input type="number" class="form-control" name="accx">
+              </div>
+              <div class="form-group">
+                <label for="accy">Y Acceleration</label>
+                 <input type="number" class="form-control" name="accy">
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="appearance">
+            ...
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+    <script src="geometry.js"></script>
+    <script src="main.js"></script>
+    <script>
+      $(document).ready( function(){
+        //Get the canvas &
+        var c = $('#stage');
+        var ct = c.get(0).getContext('2d');
+        var container = $(c).parent();
+
+        //Run function when browser resizes
+        $(window).resize( respondCanvas );
+
+        function respondCanvas(){ 
+            c.attr('width', $(container).width() ); //max width
+            c.attr('height', $(container).height() ); //max height
+
+            //Call a function to redraw other content (texts, images etc)
+        }
+        respondCanvas();
+    }); 
+    </script>
 </body>
 </html>
